@@ -1,16 +1,17 @@
 const mongoose = require('mongoose')
 
 //Make A Schema
-const fruitSchema = new mongoose.Schema({
+const vegetableSchema = new mongoose.Schema({
     name: { type: String, required: true},
     color: {type: String, required: true},
-    readyToEat: Boolean
+    size: {type: String, required: true},
+    isCooked: Boolean
 })
 
 
 // Make A Model From The Schema
 
-const Fruit = mongoose.model('Fruit', fruitSchema)
+const Vegetable = mongoose.model('Vegetable', vegetableSchema)
 //Export The Model For Use In The App
 
-module.exports = Fruit
+module.exports = Vegetable

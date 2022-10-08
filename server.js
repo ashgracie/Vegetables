@@ -4,7 +4,7 @@ const fs = require('fs') // this engine requires the fs module like we did Satur
 const express = require('express')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
-const Fruit = require('./models/fruit')
+const Vegetable = require('./models/vegetable')
 // this makes 2 const fruits & veggies 
 
 // Create our express app
@@ -36,86 +36,86 @@ app.use(methodOverride('_method'))
 
 
 // INDEX --- READ --- GET
-app.get('/fruits', (req, res) => {
-  Fruit.find({}, (err, foundFruits) => {
+app.get('/vegetables', (req, res) => {
+  Vegetable.find({}, (err, foundVegetables) => {
     if(err){
       console.error(err)
       res.status(400).send(err)
     } else {
-      res.render('fruits/Index', {
-        fruits: foundFruits
+      res.render('vegetables/Index', {
+        vegetables: foundVegetables
       })
     }
   })
 })
 
 // NEW (Not applicable in an api)
-app.get('/fruits/new', (req, res) => {
-  res.render('fruits/New')
+app.get('/vegetables/new', (req, res) => {
+  res.render('vegetables/New')
 })
 // DELETE
-app.delete('/fruits/:id', (req, res) => {
-  Fruit.findByIdAndDelete(req.params.id, (err, deletedFruit) => {
+app.delete('/vegetables/:id', (req, res) => {
+  Vegetable.findByIdAndDelete(req.params.id, (err, deletedVegetable) => {
     if(err){
       console.error(err)
       res.status(400).send(err)
     } else {
-      res.redirect('/fruits')
+      res.redirect('/vegetables')
     }
   })
 })
 
 // UPDATE
-app.put('/fruits/:id', (req, res) => {
-  req.body.readyToEat === 'on' || req.body.readyToEat === true ? req.body.readyToEat = true : req.body.readyToEat = false
-  Fruit.findByIdAndUpdate(req.params.id, req.body, {new: true},(err, updatedFruit) => {
+app.put('/vegetables/:id', (req, res) => {
+  req.body.isCooked === 'on' || req.body.isCooked === true ? req.body.isCooked = true : req.body.isCooked = false
+  Vegetable.findByIdAndUpdate(req.params.id, req.body, {new: true},(err, updatedVegetable) => {
     if(err){
       console.error(err)
       res.status(400).send(err)
     } else {
-      res.redirect(`/fruits/${updatedFruit._id}`)
+      res.redirect(`/vegetables/${updatedVegetable._id}`)
     }
   })
 })
 
 // CREATE
-app.post('/fruits', (req, res) =>{
+app.post('/vegetables', (req, res) =>{
   // req.body which contains all of our form Data we will get from the user
-  req.body.readyToEat === 'on' ? req.body.readyToEat = true : req.body.readyToEat = false
-  Fruit.create(req.body, (err, createdFruit) => {
+  req.body.isCooked === 'on' ? req.body.isCooked = true : req.body.isCooked = false
+  Vegetable.create(req.body, (err, createdVegetable) => {
     if(err){
       console.error(err)
       res.status(400).send(err)
     } else {
-      res.redirect(`/fruits/${createdFruit._id}`)
-      //res.send(createdFruit)
+      res.redirect(`/vegetables/${createdVegetable._id}`)
+      //res.send(createdVegetable)
     }
   })
 })
 
 // EDIT (not applicable in an api)
-app.get('/fruits/:id/edit', (req, res) => {
-  Fruit.findById(req.params.id, (err, foundFruit) => {
+app.get('/vegetables/:id/edit', (req, res) => {
+  Vegetable.findById(req.params.id, (err, foundVegetable) => {
     if(err){
      console.error(err)
      res.status(400).send(err)
     } else {
-     res.render('fruits/Edit', {
-       fruit: foundFruit
+     res.render('vegetables/Edit', {
+       vegetable: foundVegetable
      })
     }
   })
  })
 
 // SHOW ---- READ ---- GET
-app.get('/fruits/:id', (req, res) => {
- Fruit.findById(req.params.id, (err, foundFruit) => {
+app.get('/vegetables/:id', (req, res) => {
+ Vegetable.findById(req.params.id, (err, foundVegetable) => {
    if(err){
     console.error(err)
     res.status(400).send(err)
    } else {
-    res.render('fruits/Show', {
-      fruit: foundFruit
+    res.render('vegetables/Show', {
+      vegetable: foundVegetable
     })
    }
  })
